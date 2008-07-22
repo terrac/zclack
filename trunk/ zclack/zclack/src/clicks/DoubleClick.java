@@ -18,5 +18,6 @@ public class DoubleClick implements iclick {
 		a.mousePress(InputEvent.BUTTON1_MASK);
 		a.delay(50);
 		a.mouseRelease(InputEvent.BUTTON1_MASK);
+		Left.setDefault(b);
 	}
 }

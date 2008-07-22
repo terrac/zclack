@@ -10,6 +10,7 @@ public class None implements iclick {
 	 * @see iclick#execute(java.awt.Robot)
 	 */
 	public void execute(java.awt.Robot a, Buttons b, click click) {
-		
+		a.delay(5000);
+		Left.setDefault(b);
 	}
 }

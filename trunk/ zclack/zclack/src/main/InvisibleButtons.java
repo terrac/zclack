@@ -28,12 +28,18 @@ public class InvisibleButtons extends Buttons {
 		mgl = new MouseGesturesRecognizer(new MouseGesturesListener() {
 
 			public void gestureMovementRecognized(String currentGesture) {
-				
+				shouldProcess = currentGesture.length() < 2;
 				if (currentGesture.startsWith("DL"))
-				setCurrent(buttonMap, "Left");
-			if (currentGesture.startsWith("RD"))
-				setCurrent(buttonMap, "Right");
-			
+					setCurrent(buttonMap, "Left");
+				if (currentGesture.startsWith("DR"))
+					setCurrent(buttonMap, "Drag");
+				if (currentGesture.startsWith("UL"))
+					setCurrent(buttonMap, "DoubleClick");
+				if (currentGesture.startsWith("UR"))
+					setCurrent(buttonMap, "None");
+				if (currentGesture.startsWith("RD"))
+					setCurrent(buttonMap, "Right");
+
 				System.out.println(currentGesture);
 			}
 
@@ -45,16 +51,19 @@ public class InvisibleButtons extends Buttons {
 		});
 	}
 
+	boolean shouldProcess = false;
+
 	MouseGesturesRecognizer mgl;
 
 	@Override
 	public void runButtons(int count) {
 		// TODO Auto-generated method stub
-		if(count > 50){
+		if (count > click.interval/2) {
 			mgl.clearTemporaryInfo();
+			shouldProcess = true;
 		}
-		
-		mgl.processMouseEvent();
+		if (shouldProcess)
+			mgl.processMouseEvent();
 	}
 
 	@Override

@@ -35,6 +35,8 @@ import clicks.iclick;
 
 public class click {
 
+	public static final int interval = 70;
+
 	ClickMatch clickMatch = new ClickMatch();
 
 	Map<String, iclick> buttonMap = new HashMap<String, iclick>();
@@ -62,11 +64,10 @@ public class click {
 
 	protected void stuff() {
 		long last = Calendar.getInstance().getTimeInMillis();
-		
+
 		final Buttons bu = new InvisibleButtons();
 		bu.setupButtons(buttonMap);
 		bu.setVisible(true);
-
 
 		try {
 			final Robot a = new Robot();
@@ -79,11 +80,15 @@ public class click {
 				int y1 = (int) b.getY();
 				// System.out.println(b.equals(c)+" "+hasClicked);
 				if (b.equals(c)) {
-					if (!hasClicked && count < 70) {
+					if (!hasClicked && count < interval) {
 						long timepassed = last
 								- Calendar.getInstance().getTimeInMillis();
 						last = Calendar.getInstance().getTimeInMillis();
-						count -= timepassed / 10;
+						long l = -timepassed / 10;
+						if (l < interval / 2)
+							count += l;
+						else
+							System.out.println(l);
 					}
 
 				} else {
@@ -100,15 +105,15 @@ public class click {
 				bu.getTime().setText("" + count);
 				BufferedImage y = a.createScreenCapture(new Rectangle(b.x, b.y,
 						w, w));
-				if (count > 50 && !has50Checked) {
+				if (count > interval / 2 && !has50Checked) {
 					has50Checked = true;
 
-					iclick clickifmatch = clickMatch.clickifmatch(y);
-					if (clickifmatch != null)
-						clickifmatch.execute(a, bu, this);
+					// iclick clickifmatch = clickMatch.clickifmatch(y);
+					// if (clickifmatch != null)
+					// clickifmatch.execute(a, bu, this);
 
 				}
-				if (count > 70 && !hasClicked) {
+				if (count > interval - 1 && !hasClicked) {
 
 					// bu.setLocation(b.x, b.y);
 
