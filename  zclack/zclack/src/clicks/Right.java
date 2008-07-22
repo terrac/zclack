@@ -17,8 +17,6 @@ public class Right implements iclick {
 		a.mousePress(InputEvent.BUTTON3_MASK);
 		a.delay(50);
 		a.mouseRelease(InputEvent.BUTTON3_MASK);
-	
-		b.ic = new Left();
-		b.getCurrent().setText(Left.class.getSimpleName());
+		Left.setDefault(b);
 	}
 }

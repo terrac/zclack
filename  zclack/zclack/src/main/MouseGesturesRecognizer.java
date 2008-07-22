@@ -141,10 +141,7 @@ class MouseGesturesRecognizer {
         gesture.append(move);
         System.out.println(getGesture());
         mgl.gestureMovementRecognized(getGesture());
-        if(getGesture().length() == 4){
-        	mgl.processGesture(getGesture());
-        	clearTemporaryInfo();
-        }
+        
     }
 
     /**

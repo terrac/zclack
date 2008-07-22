@@ -13,5 +13,12 @@ public class Left implements iclick {
 		a.mousePress(InputEvent.BUTTON1_MASK);
 		a.delay(50);
 			a.mouseRelease(InputEvent.BUTTON1_MASK);
+
+
+	}
+
+	public static void setDefault(Buttons b) {
+		b.ic = new Left();
+		b.getCurrent().setText(Left.class.getSimpleName());
 	}
 }
