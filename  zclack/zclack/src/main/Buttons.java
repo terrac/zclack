@@ -36,6 +36,7 @@ public class Buttons extends Frame {
 	private JLabel current = null;//
 
 	private JLabel time = null;//
+	private static JLabel guess = null;//
 
 	/**
 	 * This is the default constructor
@@ -200,9 +201,19 @@ public class Buttons extends Frame {
 		}
 		return time;
 	}
-
+	
+	public static JLabel getGuess() {
+		if (guess == null) {
+			guess = new JLabel();
+			guess.setText("guess");
+		}
+		return guess;
+	}
+	public void setGuess(String a){
+		guess.setText(a);
+	}
 	protected void setCurrent(final Map<String, iclick> buttonMap, String c) {
-		//System.out.println(c);
+
 		// posMap.put(key, buttonMap.get(c));
 		ic = buttonMap.get(c);
 		// a.mouseMove(b.x, b.y);

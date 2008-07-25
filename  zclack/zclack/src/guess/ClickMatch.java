@@ -32,6 +32,8 @@ public class ClickMatch {
 		iclick iclick = map.get(slice, avgcolor);
 		if (iclick != null) {
 			System.out.println(iclick);
+			Buttons.getGuess().setText(iclick.getClass().getSimpleName());
+			
 			return iclick;
 		}
 		return null;
