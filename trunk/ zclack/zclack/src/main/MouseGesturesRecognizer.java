@@ -139,7 +139,6 @@ class MouseGesturesRecognizer {
         if ((gesture.length() > 0) && (gesture.charAt(gesture.length() - 1) == move.charAt(0)))
             return;
         gesture.append(move);
-        System.out.println(getGesture());
         mgl.gestureMovementRecognized(getGesture());
         
     }

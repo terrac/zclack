@@ -74,17 +74,19 @@ public class click {
 
 			int delay = 0;
 			while (true) {
+				long timepassed = last
+						- Calendar.getInstance().getTimeInMillis();
+				last = Calendar.getInstance().getTimeInMillis();
+				long l = -timepassed / 10;
+
 				final Point b = MouseInfo.getPointerInfo().getLocation();
+				
+				
 
 				int x1 = (int) b.getX();
 				int y1 = (int) b.getY();
-				// System.out.println(b.equals(c)+" "+hasClicked);
 				if (b.equals(c)) {
 					if (!hasClicked && count < interval) {
-						long timepassed = last
-								- Calendar.getInstance().getTimeInMillis();
-						last = Calendar.getInstance().getTimeInMillis();
-						long l = -timepassed / 10;
 						if (l < interval / 2)
 							count += l;
 						else
@@ -108,7 +110,8 @@ public class click {
 				if (count > interval / 2 && !has50Checked) {
 					has50Checked = true;
 
-					// iclick clickifmatch = clickMatch.clickifmatch(y);
+					 iclick clickifmatch = clickMatch.clickifmatch(y);
+					
 					// if (clickifmatch != null)
 					// clickifmatch.execute(a, bu, this);
 
@@ -123,6 +126,7 @@ public class click {
 					int lo = Integer.MAX_VALUE;
 					long coltot = 0;
 					int colsize = 0;
+					Set<Integer> set = new HashSet<Integer>();
 					for (int i = 0; i < y.getHeight(); i++) {
 						for (int j = 0; j < y.getWidth(); j++) {
 							int color = y.getRGB(i, j);
@@ -132,10 +136,13 @@ public class click {
 								lo = color;
 							coltot += color;
 							colsize++;
+							set.add(color);
 						}
 					}
-
-					int slice = hi - lo;
+					
+					
+					//int slice = hi - lo;
+					int slice = set.size();
 					int avgcolor = (int) ((long) coltot / colsize);
 					clickMatch.put(slice, avgcolor, bu.ic, y);
 					System.out.println(slice + " " + avgcolor);
