@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -33,7 +34,7 @@ import clicks.Repeat;
 import clicks.Right;
 import clicks.iclick;
 
-public class click {
+public class roundclick {
 
 	public static final int interval = 70;
 
@@ -50,7 +51,7 @@ public class click {
 	}
 
 	public static void main(String[] args) {
-		new click().stuff();
+		new roundclick().stuff();
 	}
 
 	//
@@ -69,83 +70,45 @@ public class click {
 		bu.setupButtons(buttonMap);
 		bu.setVisible(true);
 
+		List<Integer> xlist = new ArrayList<Integer>();
+		List<Integer> ylist = new ArrayList<Integer>();
+
 		try {
 			final Robot a = new Robot();
 
 			int delay = 0;
 			while (true) {
-				long timepassed = last
-						- Calendar.getInstance().getTimeInMillis();
-				last = Calendar.getInstance().getTimeInMillis();
-				long l = -timepassed / 10;
 
 				final Point b = MouseInfo.getPointerInfo().getLocation();
-				
-				
 
 				int x1 = (int) b.getX();
 				int y1 = (int) b.getY();
-				if (b.equals(c)) {
-					if (!hasClicked && count < interval) {
-						if (l < interval / 2)
-							count += l;
-						else
-							System.out.println(l);
-					}
+				ylist.add(y1);
+				xlist.add(x1);
 
-				} else {
-					count = 0;
-					hasClicked = false;
-					has50Checked = false;
-				}
-				
-				bu.runButtons(count);
-				a.delay(10);
-				int w = 100;
-				bu.getTime().setText("" + count);
-				BufferedImage y = a.createScreenCapture(new Rectangle(b.x, b.y,
-						w, w));
-				if (count > interval / 2 && !has50Checked) {
-					has50Checked = true;
+				a.delay(50);
+				int size = ylist.size();
+				if (size > 5) {
+					int xf = xlist.get(size);
+					int yf = ylist.get(size);
 
-					 iclick clickifmatch = clickMatch.clickifmatch(y);
-					
-					// if (clickifmatch != null)
-					// clickifmatch.execute(a, bu, this);
+					if ((within(x1, xf) && within(y1, yf))) {
 
-				}
-				if (count > interval - 1 && !hasClicked) {
-
-					// bu.setLocation(b.x, b.y);
-
-					hasClicked = true;
-					bu.ic.execute(a, bu, this);
-					int hi = Integer.MIN_VALUE;
-					int lo = Integer.MAX_VALUE;
-					long coltot = 0;
-					int colsize = 0;
-					Set<Integer> set = new HashSet<Integer>();
-					for (int i = 0; i < y.getHeight(); i++) {
-						for (int j = 0; j < y.getWidth(); j++) {
-							int color = y.getRGB(i, j);
-							if (hi < color)
-								hi = color;
-							if (lo > color)
-								lo = color;
-							coltot += color;
-							colsize++;
-							set.add(color);
+						int y = 0;
+						int x = 0;
+						for (int i = 0; i < size; i++) {
+							y += ylist.get(i);
+							x += xlist.get(i);
 						}
+						y = y / size;
+						x = x / xlist.size();
+						
+						
+
 					}
-					
-					
-					//int slice = hi - lo;
-					int slice = set.size();
-					int avgcolor = (int) ((long) coltot / colsize);
-					clickMatch.put(slice, avgcolor, bu.ic, y);
-					System.out.println(slice + " " + avgcolor);
+					ylist.remove(0);
+					xlist.remove(0);
 				}
-				end(b);
 
 			}
 
@@ -155,8 +118,8 @@ public class click {
 		}
 	}
 
-	protected void end(final Point b) {
-		c = b;
+	private boolean within(int x1, int xf) {
+		return xf + 5 > x1 && xf - 5 < x1;
 	}
 
 }
