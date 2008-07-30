@@ -38,11 +38,11 @@ public class InvisibleButtons extends Buttons {
 					setCurrent(buttonMap, "Left");
 //				if (currentGesture.startsWith("DR"))
 //					setCurrent(buttonMap, "Drag");
-				if (currentGesture.startsWith("UL"))
+				if (currentGesture.startsWith("ULRD"))
 					setCurrent(buttonMap, "DoubleClick");
 //				if (currentGesture.startsWith("UR"))
 //					setCurrent(buttonMap, "None");
-				if (currentGesture.startsWith("RD"))
+				if (currentGesture.startsWith("RDUL"))
 					setCurrent(buttonMap, "Right");
 
 				//System.out.println(currentGesture);

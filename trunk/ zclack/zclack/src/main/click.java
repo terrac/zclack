@@ -101,49 +101,13 @@ public class click {
 				
 				bu.runButtons(count);
 				a.delay(10);
-				int w = 100;
-				bu.getTime().setText("" + count);
-				BufferedImage y = a.createScreenCapture(new Rectangle(b.x, b.y,
-						w, w));
-				if (count > interval / 2 && !has50Checked) {
-					has50Checked = true;
-
-					 iclick clickifmatch = clickMatch.clickifmatch(y);
-					
-					// if (clickifmatch != null)
-					// clickifmatch.execute(a, bu, this);
-
-				}
+				
 				if (count > interval - 1 && !hasClicked) {
 
 					// bu.setLocation(b.x, b.y);
 
 					hasClicked = true;
-					bu.ic.execute(a, bu, this);
-					int hi = Integer.MIN_VALUE;
-					int lo = Integer.MAX_VALUE;
-					long coltot = 0;
-					int colsize = 0;
-					Set<Integer> set = new HashSet<Integer>();
-					for (int i = 0; i < y.getHeight(); i++) {
-						for (int j = 0; j < y.getWidth(); j++) {
-							int color = y.getRGB(i, j);
-							if (hi < color)
-								hi = color;
-							if (lo > color)
-								lo = color;
-							coltot += color;
-							colsize++;
-							set.add(color);
-						}
-					}
-					
-					
-					//int slice = hi - lo;
-					int slice = set.size();
-					int avgcolor = (int) ((long) coltot / colsize);
-					clickMatch.put(slice, avgcolor, bu.ic, y);
-					System.out.println(slice + " " + avgcolor);
+					bu.ic.execute(a, bu);
 				}
 				end(b);
 

@@ -5,7 +5,6 @@ import java.awt.Point;
 import java.awt.event.InputEvent;
 
 import main.Buttons;
-import main.click;
 
 public class Right implements iclick {
 	/*
@@ -13,7 +12,7 @@ public class Right implements iclick {
 	 * 
 	 * @see iclick#execute(java.awt.Robot)
 	 */
-	public void execute(java.awt.Robot a, Buttons b, click click) {
+	public void execute(java.awt.Robot a, Buttons b) {
 		a.mousePress(InputEvent.BUTTON3_MASK);
 		a.delay(50);
 		a.mouseRelease(InputEvent.BUTTON3_MASK);
