@@ -5,7 +5,6 @@ import guess.ImgMap;
 
 import java.awt.AWTException;
 import java.awt.MouseInfo;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -36,7 +35,7 @@ import clicks.iclick;
 
 public class roundclick {
 
-	public static final int interval = 70;
+	private static final int tsize = 50;
 
 	ClickMatch clickMatch = new ClickMatch();
 
@@ -64,52 +63,105 @@ public class roundclick {
 	public boolean has50Checked = false;
 
 	protected void stuff() {
-		long last = Calendar.getInstance().getTimeInMillis();
 
 		final Buttons bu = new InvisibleButtons();
 		bu.setupButtons(buttonMap);
 		bu.setVisible(true);
 
-		List<Integer> xlist = new ArrayList<Integer>();
-		List<Integer> ylist = new ArrayList<Integer>();
+		List<Point> list = new ArrayList();
 
+		int clicount = 0;
 		try {
 			final Robot a = new Robot();
 
-			int delay = 0;
+			Point last = Point
+					.convert(MouseInfo.getPointerInfo().getLocation());
+			int hcount = 0;
 			while (true) {
 
-				final Point b = MouseInfo.getPointerInfo().getLocation();
+				final Point b = Point.convert(MouseInfo.getPointerInfo()
+						.getLocation());
 
 				int x1 = (int) b.getX();
 				int y1 = (int) b.getY();
-				ylist.add(y1);
-				xlist.add(x1);
 
-				a.delay(50);
-				int size = ylist.size();
-				if (size > 5) {
-					int xf = xlist.get(size);
-					int yf = ylist.get(size);
+				if (!b.equals(last)) {
 
-					if ((within(x1, xf) && within(y1, yf))) {
+					list.add(b);
+				} else {
+					count++;
+				}
+
+				a.delay(10);
+				int size = list.size();
+				if (count > 30) {
+					list.clear();
+					count = 0;
+					//System.out.println();
+				}
+				//System.out.println(size);
+				if (size >= tsize) {
+					int xf = list.get(0).x;
+					int yf = list.get(0).y;
+
+					String pattern = "";
+					int d = within(x1, xf) ;
+					int e = within(y1, yf);
+					//System.out.println(d+" "+e);
+					if (d<10&&e<10) {
+						System.out.println("within");
+						System.out.println(hcount);
 
 						int y = 0;
 						int x = 0;
-						for (int i = 0; i < size; i++) {
-							y += ylist.get(i);
-							x += xlist.get(i);
+						for (Point point : list) {
+							y += point.y;
+							x += point.x;
 						}
+
 						y = y / size;
-						x = x / xlist.size();
-						
-						
+						x = x / size;
+						String slast = "";
+						String total = "";
+						for (Point point : list) {
+							pattern = "";
+							if (point.y > y) {
+								pattern += "D";
+							} else if (point.y < y) {
+								pattern += "U";
+							} else {
+								pattern += "M";
+							}
+							if (point.x > x) {
+								pattern += "L";
+							} else if (point.x < x) {
+								pattern += "R";
+							} else {
+								pattern += "M";
+							}
+							if (!slast.equals(pattern)) {
+								total += pattern;
+							}
+
+							slast = pattern;
+						}
+
+						System.out.println(list);
+						System.out.println(x + " " + y);
+						System.out.println(total);
+						if (pattern.startsWith("URULDL")) {
+							buttonMap.get("Left").execute(a, null);
+							System.out.println("aoeu");
+						}
+						if (pattern.startsWith("ULDLDR")) {
+							buttonMap.get("Right").execute(a, null);
+						}
 
 					}
-					ylist.remove(0);
-					xlist.remove(0);
+					list.remove(0);
 				}
 
+				last = b;
 			}
 
 		} catch (AWTException e) {
@@ -118,8 +170,9 @@ public class roundclick {
 		}
 	}
 
-	private boolean within(int x1, int xf) {
-		return xf + 5 > x1 && xf - 5 < x1;
+	private int within(int x1, int xf) {
+		
+		return Math.abs(xf-x1);
 	}
 
 }

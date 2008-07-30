@@ -3,7 +3,6 @@ package clicks;
 import java.awt.event.InputEvent;
 
 import main.Buttons;
-import main.click;
 
 public class Drag implements iclick {
 	/*
@@ -13,7 +12,7 @@ public class Drag implements iclick {
 	 */
 	
 
-	public void execute(java.awt.Robot a, Buttons b, click click) {
+	public void execute(java.awt.Robot a, Buttons b) {
 
 			a.mousePress(InputEvent.BUTTON1_MASK);
 			a.delay(4000);

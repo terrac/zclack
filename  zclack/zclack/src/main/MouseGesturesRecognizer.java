@@ -79,7 +79,7 @@ class MouseGesturesRecognizer {
      */
     void processMouseEvent() {
         
-        Point mouseEventPoint = MouseInfo.getPointerInfo().getLocation();
+        Point mouseEventPoint =  Point.convert(MouseInfo.getPointerInfo().getLocation());
         
         if (startPoint == null) {
             startPoint = mouseEventPoint;
