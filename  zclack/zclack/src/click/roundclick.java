@@ -94,6 +94,7 @@ public class roundclick {
 
 					list.add(b);
 					hasClicked = false;
+					count = 0;
 				} else {
 					count++;
 				}
@@ -181,6 +182,7 @@ public class roundclick {
 //						if (pattern.startsWith("ULDLDR")) {
 //							buttonMap.get("Right").execute(a, null);
 //						}
+						a.mouseMove(list.get(0).x, list.get(0).y);
 						if (i > 20) {
 							if (list.get(5).x < list.get(0).x) {
 								System.out.println("double");
@@ -197,6 +199,8 @@ public class roundclick {
 								System.out.println("drag");
 							}
 						}
+						a.delay(400);
+						hasClicked=true;
 						list.clear();
 
 					}
