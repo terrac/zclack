@@ -42,11 +42,12 @@ public class roundclick {
 	private static final int tsize = 50;
 
 	ClickMatch clickMatch = new ClickMatch();
-
+	None none = new None();
 	Map<String, iclick> buttonMap = new HashMap<String, iclick>();
 	{
 		buttonMap.put(Left.class.getSimpleName(), new Left());
-		buttonMap.put(None.class.getSimpleName(), new None());
+		
+		buttonMap.put(None.class.getSimpleName(), none);
 		buttonMap.put(DoubleClick.class.getSimpleName(), new DoubleClick());
 		buttonMap.put(Right.class.getSimpleName(), new Right());
 		buttonMap.put(Repeat.class.getSimpleName(), new Repeat());
@@ -64,7 +65,7 @@ public class roundclick {
 
 	public boolean hasClicked = false;
 
-	public boolean has50Checked = false;
+	
 
 	protected void stuff() {
 
@@ -92,30 +93,37 @@ public class roundclick {
 				if (!b.equals(last)) {
 
 					list.add(b);
+					hasClicked = false;
 				} else {
 					count++;
 				}
 
 				a.delay(10);
-				
-				if (count > 30) {
+
+				if (count > 100) {
 					list.clear();
 					count = 0;
-					//System.out.println();
+					
+					if(!none.isNone&&!hasClicked){
+						
+						buttonMap.get("Left").execute(a, null);
+						hasClicked = true;
+					}
+					// System.out.println();
 				}
 				int size = list.size();
-				//System.out.println(size);
+				// System.out.println(size);
 				if (size >= tsize) {
 					int xf = list.get(0).x;
 					int yf = list.get(0).y;
 
 					String pattern = "";
-					int d = within(x1, xf) ;
+					int d = within(x1, xf);
 					int e = within(y1, yf);
-					//System.out.println(d+" "+e);
-					//System.out.print(y1+" "+x1+"-");
-					//System.out.println(yf+" "+xf);
-					if (d<10&&e<10) {
+					// System.out.println(d+" "+e);
+					// System.out.print(y1+" "+x1+"-");
+					// System.out.println(yf+" "+xf);
+					if (d < 10 && e < 10) {
 						System.out.println("within");
 						System.out.println(hcount);
 
@@ -126,11 +134,19 @@ public class roundclick {
 							x += point.x;
 						}
 
+						int highestx = 0;
+						int lowestx = Integer.MAX_VALUE;
 						y = y / size;
 						x = x / size;
 						String slast = "";
 						String total = "";
 						for (Point point : list) {
+							if (highestx < point.x) {
+								highestx = point.x;
+							}
+							if (lowestx > point.x) {
+								lowestx = point.x;
+							}
 							pattern = "";
 							if (point.y > y) {
 								pattern += "D";
@@ -153,23 +169,38 @@ public class roundclick {
 							slast = pattern;
 						}
 
-						
-//						System.out.println(list);
-//						System.out.println(x + " " + y);
-//						System.out.println(total);
-						if (pattern.startsWith("URULDL")) {
-							buttonMap.get("Left").execute(a, null);
-							System.out.println("aoeu");
+						int i = highestx - lowestx;
+						// System.out.println(list);
+						System.out.println(i);
+						// System.out.println(x + " " + y);
+						// System.out.println(total);
+//						if (pattern.startsWith("URULDL")) {
+//							buttonMap.get("Left").execute(a, null);
+//							System.out.println("aoeu");
+//						}
+//						if (pattern.startsWith("ULDLDR")) {
+//							buttonMap.get("Right").execute(a, null);
+//						}
+						if (i > 20) {
+							if (list.get(5).x < list.get(0).x) {
+								System.out.println("double");
+								buttonMap.get("DoubleClick").execute(a, null);
+							} else {
+								buttonMap.get("Right").execute(a, null);
+							}
+						} else {
+							if (list.get(5).y < list.get(0).y) {
+								System.out.println("none");
+								buttonMap.get("None").execute(a, null);
+							} else {
+								buttonMap.get("Drag").execute(a, null);
+								System.out.println("drag");
+							}
 						}
-						if (pattern.startsWith("ULDLDR")) {
-							buttonMap.get("Right").execute(a, null);
-						}
-						//buttonMap.get("Right").execute(a, null);
 						list.clear();
-						plist.add(total);
-						System.out.println(plist);
+
 					}
-					//list.remove(0);
+					// list.remove(0);
 				}
 
 				last = b;
@@ -182,8 +213,8 @@ public class roundclick {
 	}
 
 	private int within(int x1, int xf) {
-		
-		return Math.abs(xf-x1);
+
+		return Math.abs(xf - x1);
 	}
 
 }
