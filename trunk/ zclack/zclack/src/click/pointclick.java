@@ -1,4 +1,4 @@
-package main;
+package click;
 
 import guess.ClickMatch;
 import guess.ImgMap;
@@ -25,6 +25,10 @@ import java.util.Set;
 
 import javax.swing.JButton;
 
+import main.Buttons;
+import main.InvisibleButtons;
+import main.Point;
+
 import clicks.DoubleClick;
 import clicks.Drag;
 import clicks.Left;
@@ -33,9 +37,9 @@ import clicks.Repeat;
 import clicks.Right;
 import clicks.iclick;
 
-public class roundclick {
+public class pointclick {
 
-	private static final int tsize = 50;
+	private static final int tsize = 1;
 
 	ClickMatch clickMatch = new ClickMatch();
 
@@ -50,7 +54,7 @@ public class roundclick {
 	}
 
 	public static void main(String[] args) {
-		new roundclick().stuff();
+		new pointclick().stuff();
 	}
 
 	//
@@ -68,7 +72,8 @@ public class roundclick {
 		bu.setupButtons(buttonMap);
 		bu.setVisible(true);
 
-		List<Point> list = new ArrayList();
+		List<Double> list = new ArrayList();
+		List<Point> plist = new ArrayList();
 
 		int clicount = 0;
 		try {
@@ -76,89 +81,52 @@ public class roundclick {
 
 			Point last = Point
 					.convert(MouseInfo.getPointerInfo().getLocation());
-			int hcount = 0;
+			int tcount = 0;
 			while (true) {
 
 				final Point b = Point.convert(MouseInfo.getPointerInfo()
 						.getLocation());
-
-				int x1 = (int) b.getX();
-				int y1 = (int) b.getY();
-
-				if (!b.equals(last)) {
-
-					list.add(b);
-				} else {
-					count++;
-				}
-
 				a.delay(10);
-				int size = list.size();
-				if (count > 30) {
-					list.clear();
-					count = 0;
-					//System.out.println();
-				}
-				//System.out.println(size);
-				if (size >= tsize) {
-					int xf = list.get(0).x;
-					int yf = list.get(0).y;
 
-					String pattern = "";
-					int d = within(x1, xf) ;
-					int e = within(y1, yf);
-					//System.out.println(d+" "+e);
-					if (d<10&&e<10) {
-						System.out.println("within");
-						System.out.println(hcount);
-
-						int y = 0;
-						int x = 0;
-						for (Point point : list) {
-							y += point.y;
-							x += point.x;
-						}
-
-						y = y / size;
-						x = x / size;
-						String slast = "";
-						String total = "";
-						for (Point point : list) {
-							pattern = "";
-							if (point.y > y) {
-								pattern += "D";
-							} else if (point.y < y) {
-								pattern += "U";
-							} else {
-								pattern += "M";
-							}
-							if (point.x > x) {
-								pattern += "L";
-							} else if (point.x < x) {
-								pattern += "R";
-							} else {
-								pattern += "M";
-							}
-							if (!slast.equals(pattern)) {
-								total += pattern;
-							}
-
-							slast = pattern;
-						}
-
-						System.out.println(list);
-						System.out.println(x + " " + y);
-						System.out.println(total);
-						if (pattern.startsWith("URULDL")) {
-							buttonMap.get("Left").execute(a, null);
-							System.out.println("aoeu");
-						}
-						if (pattern.startsWith("ULDLDR")) {
-							buttonMap.get("Right").execute(a, null);
-						}
-
+				if (b.equals(last)) {
+					tcount++;
+					if (tcount > 100) {
+						System.out.println(tcount);
+						tcount = 0;
+						plist.clear();
+						plist.add(b);
 					}
-					list.remove(0);
+					count++;
+					if (count > 50&&plist.size() > 0) {
+
+						Point point = plist.get(0);
+
+						if (within(point.x, b.x, 20)
+								&& within(point.y, b.y, 20)) {
+
+							System.out.println(" " + plist.size());
+							plist.clear();
+
+						}
+						count = 0;
+						plist.add(b);
+						
+					}
+					
+
+				} else {
+					tcount = 0;
+				}
+				int i = (b.x - last.x);
+				if (i == 0)
+					list.add(10.0);
+				else {
+					double e = (double) (b.y - last.y) / i;
+
+					list.add(e);
+				}
+				if (Calendar.getInstance().getTime().getMinutes() == 50) {
+					System.exit(0);
 				}
 
 				last = b;
@@ -170,9 +138,11 @@ public class roundclick {
 		}
 	}
 
-	private int within(int x1, int xf) {
-		
-		return Math.abs(xf-x1);
+	private boolean within(int x1, int xf, int w) {
+
+		int abs = Math.abs(xf - x1);
+		// System.out.print("a" + abs);
+		return abs < w;
 	}
 
 }
