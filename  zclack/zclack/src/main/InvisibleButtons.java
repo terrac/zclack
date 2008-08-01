@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
+import click.click;
 import clicks.iclick;
 
 public class InvisibleButtons extends Buttons {

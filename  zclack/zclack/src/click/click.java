@@ -1,4 +1,4 @@
-package main;
+package click;
 
 import guess.ClickMatch;
 import guess.ImgMap;
@@ -24,6 +24,9 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.swing.JButton;
+
+import main.Buttons;
+import main.InvisibleButtons;
 
 import clicks.DoubleClick;
 import clicks.Drag;

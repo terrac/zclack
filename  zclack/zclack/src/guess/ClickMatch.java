@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import main.Buttons;
-import main.click;
+import click.click;
 import clicks.iclick;
 
 public class ClickMatch {
