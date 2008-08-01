@@ -10,13 +10,16 @@ public class Drag implements iclick {
 	 * 
 	 * @see iclick#execute(java.awt.Robot)
 	 */
-	
+
+	boolean isDrag = false;;
 
 	public void execute(java.awt.Robot a, Buttons b) {
-
+		isDrag = !isDrag;
+		if (isDrag) {
 			a.mousePress(InputEvent.BUTTON1_MASK);
-			a.delay(4000);
+		} else {
 			a.mouseRelease(InputEvent.BUTTON1_MASK);
-			Left.setDefault(b);
+		}
+		
 	}
 }
