@@ -46,7 +46,7 @@ public class roundclick {
 	Map<String, iclick> buttonMap = new HashMap<String, iclick>();
 	{
 		buttonMap.put(Left.class.getSimpleName(), new Left());
-		
+
 		buttonMap.put(None.class.getSimpleName(), none);
 		buttonMap.put(DoubleClick.class.getSimpleName(), new DoubleClick());
 		buttonMap.put(Right.class.getSimpleName(), new Right());
@@ -65,14 +65,12 @@ public class roundclick {
 
 	public boolean hasClicked = false;
 
-	
-
 	protected void stuff() {
 
 		final Buttons bu = new InvisibleButtons();
 		bu.setupButtons(buttonMap);
 		bu.setVisible(true);
-
+		bu.setAlwaysOnTop(false);
 		List<Point> list = new ArrayList();
 		List<String> plist = new ArrayList();
 		int clicount = 0;
@@ -81,6 +79,8 @@ public class roundclick {
 
 			Point last = Point
 					.convert(MouseInfo.getPointerInfo().getLocation());
+			Point lastClick = Point.convert(MouseInfo.getPointerInfo()
+					.getLocation());
 			int hcount = 0;
 			while (true) {
 
@@ -104,11 +104,13 @@ public class roundclick {
 				if (count > 100) {
 					list.clear();
 					count = 0;
-					
-					if(!none.isNone&&!hasClicked){
-						
-						buttonMap.get("Left").execute(a, null);
+
+					if (!none.isNone && !hasClicked) {
+						if (!within(lastClick, b, 10)) {
+							buttonMap.get("Left").execute(a, null);
+						}
 						hasClicked = true;
+						lastClick = b;
 					}
 					// System.out.println();
 				}
@@ -124,7 +126,7 @@ public class roundclick {
 					// System.out.println(d+" "+e);
 					// System.out.print(y1+" "+x1+"-");
 					// System.out.println(yf+" "+xf);
-					if (d < 10 && e < 10) {
+					if (d < 30 && e < 30) {
 						System.out.println("within");
 						System.out.println(hcount);
 
@@ -175,13 +177,13 @@ public class roundclick {
 						System.out.println(i);
 						// System.out.println(x + " " + y);
 						// System.out.println(total);
-//						if (pattern.startsWith("URULDL")) {
-//							buttonMap.get("Left").execute(a, null);
-//							System.out.println("aoeu");
-//						}
-//						if (pattern.startsWith("ULDLDR")) {
-//							buttonMap.get("Right").execute(a, null);
-//						}
+						// if (pattern.startsWith("URULDL")) {
+						// buttonMap.get("Left").execute(a, null);
+						// System.out.println("aoeu");
+						// }
+						// if (pattern.startsWith("ULDLDR")) {
+						// buttonMap.get("Right").execute(a, null);
+						// }
 						a.mouseMove(list.get(0).x, list.get(0).y);
 						if (i > 20) {
 							if (list.get(5).x < list.get(0).x) {
@@ -200,7 +202,7 @@ public class roundclick {
 							}
 						}
 						a.delay(400);
-						hasClicked=true;
+						hasClicked = true;
 						list.clear();
 
 					}
@@ -221,4 +223,8 @@ public class roundclick {
 		return Math.abs(xf - x1);
 	}
 
+	private boolean within(Point a, Point b, int c) {
+
+		return Math.abs(a.x - b.x) < c && Math.abs(a.y - b.y) < c;
+	}
 }

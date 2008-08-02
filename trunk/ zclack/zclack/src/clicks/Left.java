@@ -10,7 +10,7 @@ public class Left implements iclick {
 	 */
 	public void execute(java.awt.Robot a, Buttons b) {
 		a.mousePress(InputEvent.BUTTON1_MASK);
-		a.delay(50);
+		a.delay(20);
 			a.mouseRelease(InputEvent.BUTTON1_MASK);
 
 
