@@ -95,18 +95,19 @@ public class roundclick {
 					list.add(b);
 					hasClicked = false;
 					count = 0;
+					
 				} else {
 					count++;
 				}
 
 				a.delay(10);
 
-				if (count > 100) {
-					list.clear();
+				
+				if (count > 40) {
 					count = 0;
-
+					list.clear();
 					if (!none.isNone && !hasClicked) {
-						if (!within(lastClick, b, 10)) {
+						if (!within(lastClick, b, 2)) {
 							buttonMap.get("Left").execute(a, null);
 						}
 						hasClicked = true;
@@ -195,13 +196,14 @@ public class roundclick {
 						} else {
 							if (list.get(5).y < list.get(0).y) {
 								System.out.println("none");
-								buttonMap.get("None").execute(a, null);
+								//buttonMap.get("None").execute(a, null);
 							} else {
 								buttonMap.get("Drag").execute(a, null);
 								System.out.println("drag");
 							}
 						}
 						a.delay(400);
+						
 						hasClicked = true;
 						list.clear();
 

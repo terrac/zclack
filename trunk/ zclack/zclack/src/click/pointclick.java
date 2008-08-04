@@ -55,9 +55,9 @@ public class pointclick {
 
 	public static void main(String[] args) {
 		new pointclick().stuff();
-	}
+	}                                               
 
-	//
+	//  
 	Point c = null;
 
 	public int count = 0;
