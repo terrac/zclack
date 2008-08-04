@@ -12,10 +12,10 @@ public class DoubleClick implements iclick {
 	 */
 	public void execute(java.awt.Robot a, Buttons b) {
 		a.mousePress(InputEvent.BUTTON1_MASK);
-		a.delay(50);
+		a.delay(10);
 		a.mouseRelease(InputEvent.BUTTON1_MASK);
 		a.mousePress(InputEvent.BUTTON1_MASK);
-		a.delay(50);
+		a.delay(10);
 		a.mouseRelease(InputEvent.BUTTON1_MASK);
 		Left.setDefault(b);
 	}
