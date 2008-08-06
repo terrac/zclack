@@ -42,7 +42,9 @@ public class roundclick {
 	private static final int tsize = 50;
 
 	ClickMatch clickMatch = new ClickMatch();
+
 	None none = new None();
+
 	Map<String, iclick> buttonMap = new HashMap<String, iclick>();
 	{
 		buttonMap.put(Left.class.getSimpleName(), new Left());
@@ -70,7 +72,7 @@ public class roundclick {
 		final Buttons bu = new InvisibleButtons();
 		bu.setupButtons(buttonMap);
 		bu.setVisible(true);
-		bu.setAlwaysOnTop(false);
+		// bu.setAlwaysOnTop(false);
 		List<Point> list = new ArrayList();
 		List<String> plist = new ArrayList();
 		int clicount = 0;
@@ -83,7 +85,12 @@ public class roundclick {
 					.getLocation());
 			int hcount = 0;
 			while (true) {
-
+				int minutes = Calendar.getInstance().getTime().getMinutes();
+//				if (within(minutes, 55) < 5) {
+//					bu.getCurrent().setText("Stop");
+//
+//					continue;
+//				}
 				final Point b = Point.convert(MouseInfo.getPointerInfo()
 						.getLocation());
 
@@ -95,15 +102,14 @@ public class roundclick {
 					list.add(b);
 					hasClicked = false;
 					count = 0;
-					
+
 				} else {
 					count++;
 				}
 
 				a.delay(10);
 
-				
-				if (count > 40) {
+				if (count > 80) {
 					count = 0;
 					list.clear();
 					if (!none.isNone && !hasClicked) {
@@ -127,7 +133,7 @@ public class roundclick {
 					// System.out.println(d+" "+e);
 					// System.out.print(y1+" "+x1+"-");
 					// System.out.println(yf+" "+xf);
-					if (d < 30 && e < 30) {
+					if (d < 20 && e < 20) {
 						System.out.println("within");
 						System.out.println(hcount);
 
@@ -185,25 +191,31 @@ public class roundclick {
 						// if (pattern.startsWith("ULDLDR")) {
 						// buttonMap.get("Right").execute(a, null);
 						// }
-						a.mouseMove(list.get(0).x, list.get(0).y);
+						iclick iclick = null;
+						;
+
 						if (i > 20) {
 							if (list.get(5).x < list.get(0).x) {
 								System.out.println("double");
-								buttonMap.get("DoubleClick").execute(a, null);
+								iclick = buttonMap.get("DoubleClick");
+
 							} else {
-								buttonMap.get("Right").execute(a, null);
+								iclick = buttonMap.get("Right");
 							}
 						} else {
 							if (list.get(5).y < list.get(0).y) {
 								System.out.println("none");
-								//buttonMap.get("None").execute(a, null);
+								// buttonMap.get("None").execute(a, null);
 							} else {
-								buttonMap.get("Drag").execute(a, null);
+								iclick = buttonMap.get("Drag");
 								System.out.println("drag");
 							}
 						}
-						a.delay(400);
-						
+						a.delay(200);
+						a.mouseMove(list.get(0).x, list.get(0).y);
+						if (iclick != null)
+							iclick.execute(a, null);
+
 						hasClicked = true;
 						list.clear();
 
