@@ -39,6 +39,8 @@ import clicks.iclick;
 
 public class roundclick {
 
+	private static final int interval = 80;
+
 	private static final int tsize = 50;
 
 	ClickMatch clickMatch = new ClickMatch();
@@ -84,13 +86,19 @@ public class roundclick {
 			Point lastClick = Point.convert(MouseInfo.getPointerInfo()
 					.getLocation());
 			int hcount = 0;
+			long tlast = Calendar.getInstance().getTimeInMillis();
 			while (true) {
+				long timepassed = tlast
+						- Calendar.getInstance().getTimeInMillis();
+				tlast = Calendar.getInstance().getTimeInMillis();
+				long l = -timepassed / 10;
+
 				int minutes = Calendar.getInstance().getTime().getMinutes();
-//				if (within(minutes, 55) < 5) {
-//					bu.getCurrent().setText("Stop");
-//
-//					continue;
-//				}
+				// if (within(minutes, 55) < 5) {
+				// bu.getCurrent().setText("Stop");
+				//
+				// continue;
+				// }
 				final Point b = Point.convert(MouseInfo.getPointerInfo()
 						.getLocation());
 
@@ -98,20 +106,25 @@ public class roundclick {
 				int y1 = (int) b.getY();
 
 				if (!b.equals(last)) {
-
+					
 					list.add(b);
 					hasClicked = false;
 					count = 0;
 
 				} else {
-					count++;
+					if (count < interval) {
+						if (l < interval / 2)
+							count += l;
+						else
+							System.out.println(l);
+					}
 				}
-
+				//System.out.println(count);
 				a.delay(10);
 
-				if (count > 80) {
+				if (count > interval-1) {
 					count = 0;
-					list.clear();
+
 					if (!none.isNone && !hasClicked) {
 						if (!within(lastClick, b, 2)) {
 							buttonMap.get("Left").execute(a, null);
@@ -121,9 +134,13 @@ public class roundclick {
 					}
 					// System.out.println();
 				}
-				int size = list.size();
+
 				// System.out.println(size);
-				if (size >= tsize&& count > 5) {
+				if (count == 10) {
+					list.clear();
+				}
+				int size = list.size();
+				if (size >= tsize && count > 5) {
 					int xf = list.get(0).x;
 					int yf = list.get(0).y;
 
@@ -193,7 +210,7 @@ public class roundclick {
 						// System.out.println(list);
 						System.out.println(i);
 						// System.out.println(x + " " + y);
-						// System.out.println(total);
+						System.out.println(total);
 						// if (pattern.startsWith("URULDL")) {
 						// buttonMap.get("Left").execute(a, null);
 						// System.out.println("aoeu");
@@ -221,9 +238,9 @@ public class roundclick {
 								System.out.println("drag");
 							}
 						}
-						a.delay(200);
+						// a.delay(200);
 						a.mouseMove(list.get(0).x, list.get(0).y);
-						if (iclick != null&& ylen > 20)
+						if (iclick != null && ylen > 20)
 							iclick.execute(a, null);
 
 						hasClicked = true;
