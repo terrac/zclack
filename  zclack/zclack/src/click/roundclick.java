@@ -70,7 +70,7 @@ public class roundclick {
 	public boolean hasClicked = false;
 
 	protected void stuff() {
-
+		Drag drag = (Drag) buttonMap.get("Drag");
 		final Buttons bu = new InvisibleButtons();
 		bu.setupButtons(buttonMap);
 		bu.setVisible(true);
@@ -87,6 +87,9 @@ public class roundclick {
 					.getLocation());
 			int hcount = 0;
 			long tlast = Calendar.getInstance().getTimeInMillis();
+			double len = 0;
+			double time = 0;
+
 			while (true) {
 				long timepassed = tlast
 						- Calendar.getInstance().getTimeInMillis();
@@ -105,24 +108,46 @@ public class roundclick {
 				int x1 = (int) b.getX();
 				int y1 = (int) b.getY();
 
+				double distance = Math.abs((last.x - x1) ^ 2 + (last.y - y1)
+						^ 2);
+				distance = Math.sqrt(distance);
+				len += distance;
+				time += l;
 				if (!b.equals(last)) {
-					
+
 					list.add(b);
 					hasClicked = false;
 					count = 0;
 
 				} else {
 					if (count < interval) {
-						if (l < interval / 2)
+						if (l < interval / 2) {
 							count += l;
-						else
+
+						} else
 							System.out.println(l);
 					}
+
 				}
-				//System.out.println(count);
+				if (count > 50) {
+					time = 0;
+					len = 0;
+				}
+				double speed = len / time;
+				if (speed > 3&&drag.isDrag) {
+					drag.execute(a, null);
+					hasClicked = true;
+					System.out.println("enddrag");	
+				}
+				// System.out.println(count);
+				if (time != 0) {
+					//System.out.println(speed);
+					// System.out.println(len);
+					// System.out.println(time);
+				}
 				a.delay(10);
 
-				if (count > interval-1) {
+				if (count > interval - 1&&!hasClicked) {
 					count = 0;
 
 					if (!none.isNone && !hasClicked) {
@@ -219,7 +244,7 @@ public class roundclick {
 						// buttonMap.get("Right").execute(a, null);
 						// }
 						iclick iclick = null;
-						;
+						
 
 						if (i > 20) {
 							if (list.get(5).x < list.get(0).x) {

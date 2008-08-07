@@ -11,7 +11,7 @@ public class Drag implements iclick {
 	 * @see iclick#execute(java.awt.Robot)
 	 */
 
-	boolean isDrag = false;;
+	public boolean isDrag = false;;
 
 	public void execute(java.awt.Robot a, Buttons b) {
 		isDrag = !isDrag;
