@@ -123,7 +123,7 @@ public class roundclick {
 				}
 				int size = list.size();
 				// System.out.println(size);
-				if (size >= tsize) {
+				if (size >= tsize&& count > 5) {
 					int xf = list.get(0).x;
 					int yf = list.get(0).y;
 
@@ -146,6 +146,9 @@ public class roundclick {
 
 						int highestx = 0;
 						int lowestx = Integer.MAX_VALUE;
+
+						int highesty = 0;
+						int lowesty = Integer.MAX_VALUE;
 						y = y / size;
 						x = x / size;
 						String slast = "";
@@ -156,6 +159,12 @@ public class roundclick {
 							}
 							if (lowestx > point.x) {
 								lowestx = point.x;
+							}
+							if (highesty < point.y) {
+								highesty = point.y;
+							}
+							if (lowesty > point.y) {
+								lowesty = point.y;
 							}
 							pattern = "";
 							if (point.y > y) {
@@ -180,6 +189,7 @@ public class roundclick {
 						}
 
 						int i = highestx - lowestx;
+						int ylen = highesty - lowesty;
 						// System.out.println(list);
 						System.out.println(i);
 						// System.out.println(x + " " + y);
@@ -213,7 +223,7 @@ public class roundclick {
 						}
 						a.delay(200);
 						a.mouseMove(list.get(0).x, list.get(0).y);
-						if (iclick != null)
+						if (iclick != null&& ylen > 20)
 							iclick.execute(a, null);
 
 						hasClicked = true;
