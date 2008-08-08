@@ -9,6 +9,7 @@ import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -89,7 +90,7 @@ public class roundclick {
 			long tlast = Calendar.getInstance().getTimeInMillis();
 			double len = 0;
 			double time = 0;
-
+			a.setAutoDelay(50);
 			while (true) {
 				long timepassed = tlast
 						- Calendar.getInstance().getTimeInMillis();
@@ -134,10 +135,25 @@ public class roundclick {
 					len = 0;
 				}
 				double speed = len / time;
-				if (speed > 3&&drag.isDrag) {
-					drag.execute(a, null);
+				if (speed < .2&&drag.isDrag) {
+//					//drag.execute(a, null);
+//					a.keyPress(KeyEvent.VK_SHIFT);
+//					a.keyPress(KeyEvent.VK_HOME);
+//					a.keyRelease(KeyEvent.VK_SHIFT);
+//					a.keyPress(KeyEvent.VK_CONTROL);
+//					a.keyPress(KeyEvent.VK_C);
+//					
+//					a.keyRelease(KeyEvent.VK_C);
+//					
+//					a.keyRelease(KeyEvent.VK_CONTROL);
+//					System.out.println("aoeu");
+//					a.delay(5000);
+					
+					a.mouseRelease(InputEvent.BUTTON1_MASK);
+					drag.isDrag = false;
 					hasClicked = true;
-					System.out.println("enddrag");	
+					System.out.println("enddrag");
+					
 				}
 				// System.out.println(count);
 				if (time != 0) {
