@@ -98,11 +98,11 @@ public class roundclick {
 				long l = -timepassed / 10;
 
 				int minutes = Calendar.getInstance().getTime().getMinutes();
-				// if (within(minutes, 55) < 5) {
-				// bu.getCurrent().setText("Stop");
-				//
-				// continue;
-				// }
+//				 if (within(minutes, 55) < 5) {
+//				 bu.getCurrent().setText("Stop");
+//				
+//				 continue;
+//				 }
 				final Point b = Point.convert(MouseInfo.getPointerInfo()
 						.getLocation());
 
