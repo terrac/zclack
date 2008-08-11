@@ -16,57 +16,71 @@ public class ImageRecognition {
 	public static void main(String[] args) {
 		BufferedImage totalPicture = null;
 		try {
-			
+
 			Robot robot = new Robot();
-			
-			if(totalPicture == null){
-				Dimension a =Toolkit.getDefaultToolkit().getScreenSize();
-				
-				BufferedImage bImg = robot.createScreenCapture(new Rectangle(a.width,a.height));
-				totalPicture = new BufferedImage(bImg.getWidth()/10,bImg.getHeight()/10,BufferedImage.TYPE_INT_ARGB);
-				
-//				for (int i = 0; i < bImg.getWidth(); i +=10) {
-//					for (int j = 0; j < bImg.getHeight(); j +=10) {
-//						Set<Integer> set = new HashSet<Integer>();
-//						
-//						for (int k = 0; k < 10; k++) {
-//							for (int index = 0; index < 10; index++) {
-//								int l = j+index;
-//								int l2 = i+k;
-//								if(l2 > bImg.getWidth()||l > bImg.getHeight()){
-//									continue;
-//								}
-//								//should average by r g b seperately probably
-//								avg = bImg.getRGB(l2, l);
-//								Color x,y;
-//								if(within(x.getBlue(), y.getBlue())
-//										&&within(x.getRed(), y.getRed())
-//										&&within(x.getGreen(), y.getGreen())){
-//										
-//									
-//								}
-//								
-//								
-//							}
-//						}
-//						totalPicture.setRGB(i, j, avg);
-//					}
-//				}
-				
-//				Canvas canv = new Canvas();
-//				canv.getGraphics().drawImage(totalPicture,0,0,null);
+
+			if (totalPicture == null) {
+				Dimension a = Toolkit.getDefaultToolkit().getScreenSize();
+
+				BufferedImage bImg = robot.createScreenCapture(new Rectangle(
+						a.width, a.height));
+				boolean[][] boolR = new boolean[a.width][a.height];
+				obj o = new obj();
+				Tree t = new Tree<obj>(o);
+				o.setColor(bImg.getRGB(0,0));
+				for (int i = 1; i < bImg.getWidth(); i += 1) {
+					for (int j = 1; j < bImg.getHeight(); j += 1) {
+						
+						
+						Color x = new Color(bImg.getRGB(i, j));
+						Color y = o.getColor();
+						boolR[i][j] = true;
+						if (within(x, y)) {
+
+						}else {
+							subcut(bImg, boolR, o, t, i, j);	
+						}
+
+					}
+				}
+
+				// Canvas canv = new Canvas();
+				// canv.getGraphics().drawImage(totalPicture,0,0,null);
 			}
-			BufferedImage mousePicture =robot.createScreenCapture(new Rectangle(200,200));
-			
-			
-			
+			BufferedImage mousePicture = robot
+					.createScreenCapture(new Rectangle(200, 200));
+
 		} catch (AWTException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
+	private static boolean within(Color x, Color y) {
+		return within(x.getBlue(), y.getBlue())
+				&& within(x.getRed(), y.getRed())
+				&& within(x.getGreen(), y.getGreen());
+	}
+
+	public static void subcut(BufferedImage bImg, boolean[][] boolR, obj o, Tree t, int i, int j) {
+		for (int x = i; x < bImg.getWidth(); x--) {
+			if(within){
+				boolR[y][x] = true;		
+			}
+				
+		}
+		for (int x = i; x < bImg.getWidth(); x++) {
+			for (int y = j; y < bImg.getHeight(); y++) {
+				if(within){
+				boolR[y][x] = true;		
+				}
+			}
+		}
+		t.addBranch(new Tree(o));
+	}
+
 	private static boolean within(int x1, int xf) {
-		
-		return Math.abs(xf - x1)<10;
+
+		return Math.abs(xf - x1) < 10;
 	}
 }
