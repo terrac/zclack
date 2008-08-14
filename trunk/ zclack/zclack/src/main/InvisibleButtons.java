@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -14,47 +15,51 @@ import click.click;
 import clicks.iclick;
 
 public class InvisibleButtons extends Buttons {
-	
-	
-	
+
 	void initialize() {
 		this.setLayout(new FlowLayout());
 		this.setSize(100, 30);
 		this.setTitle("ZClack");
 
 		add(getCurrent());
-		//add(getTime());
-		
+		// add(getTime());
+
 		add(getGuess());
-		
+
 		java.awt.Dimension screenSize = Toolkit.getDefaultToolkit()
 				.getScreenSize();
 		setLocation(screenSize.width - 100, screenSize.height - 30);
 		setAlwaysOnTop(true);
-		mgl = new MouseGesturesRecognizer(new MouseGesturesListener() {
+		getCurrent().addMouseListener(new MouseListener() {
 
-			public void gestureMovementRecognized(String currentGesture) {
-				shouldProcess = currentGesture.length() < 2;
-				if (currentGesture.startsWith("DL"))
-					setCurrent(buttonMap, "Left");
-//				if (currentGesture.startsWith("DR"))
-//					setCurrent(buttonMap, "Drag");
-				if (currentGesture.startsWith("ULRD"))
-					setCurrent(buttonMap, "DoubleClick");
-//				if (currentGesture.startsWith("UR"))
-//					setCurrent(buttonMap, "None");
-				if (currentGesture.startsWith("RDUL"))
-					setCurrent(buttonMap, "Right");
-
-				//System.out.println(currentGesture);
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				if (getCurrent().getText().equals("Stop"))
+					getCurrent().setText("Return");
 			}
 
-			public void processGesture(String gesture) {
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 
 			}
 
 		});
+
 	}
 
 	boolean shouldProcess = false;
@@ -64,7 +69,7 @@ public class InvisibleButtons extends Buttons {
 	@Override
 	public void runButtons(int count) {
 		// TODO Auto-generated method stub
-		if (count > click.interval/2) {
+		if (count > click.interval / 2) {
 			mgl.clearTemporaryInfo();
 			shouldProcess = true;
 		}
