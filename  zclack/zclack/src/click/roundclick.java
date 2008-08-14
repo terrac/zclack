@@ -98,11 +98,18 @@ public class roundclick {
 				long l = -timepassed / 10;
 
 				int minutes = Calendar.getInstance().getTime().getMinutes();
-//				 if (within(minutes, 55) < 5) {
-//				 bu.getCurrent().setText("Stop");
-//				
-//				 continue;
-//				 }
+				if (within(minutes, 55) < 5) {
+					if (!bu.getCurrent().getText().equals("Return")){
+						bu.getCurrent().setText("Stop");
+					
+						continue;
+					}  else{
+						
+					}
+				} else {
+					bu.getCurrent().setText("Current");
+				}
+
 				final Point b = Point.convert(MouseInfo.getPointerInfo()
 						.getLocation());
 
@@ -135,35 +142,35 @@ public class roundclick {
 					len = 0;
 				}
 				double speed = len / time;
-				if (speed < .2&&drag.isDrag) {
-//					//drag.execute(a, null);
-//					a.keyPress(KeyEvent.VK_SHIFT);
-//					a.keyPress(KeyEvent.VK_HOME);
-//					a.keyRelease(KeyEvent.VK_SHIFT);
-//					a.keyPress(KeyEvent.VK_CONTROL);
-//					a.keyPress(KeyEvent.VK_C);
-//					
-//					a.keyRelease(KeyEvent.VK_C);
-//					
-//					a.keyRelease(KeyEvent.VK_CONTROL);
-//					System.out.println("aoeu");
-//					a.delay(5000);
-					
+				if (speed < .2 && drag.isDrag) {
+					// //drag.execute(a, null);
+					// a.keyPress(KeyEvent.VK_SHIFT);
+					// a.keyPress(KeyEvent.VK_HOME);
+					// a.keyRelease(KeyEvent.VK_SHIFT);
+					// a.keyPress(KeyEvent.VK_CONTROL);
+					// a.keyPress(KeyEvent.VK_C);
+					//					
+					// a.keyRelease(KeyEvent.VK_C);
+					//					
+					// a.keyRelease(KeyEvent.VK_CONTROL);
+					// System.out.println("aoeu");
+					// a.delay(5000);
+
 					a.mouseRelease(InputEvent.BUTTON1_MASK);
 					drag.isDrag = false;
 					hasClicked = true;
 					System.out.println("enddrag");
-					
+
 				}
 				// System.out.println(count);
 				if (time != 0) {
-					//System.out.println(speed);
+					// System.out.println(speed);
 					// System.out.println(len);
 					// System.out.println(time);
 				}
 				a.delay(10);
 
-				if (count > interval - 1&&!hasClicked) {
+				if (count > interval - 1 && !hasClicked) {
 					count = 0;
 
 					if (!none.isNone && !hasClicked) {
@@ -192,8 +199,8 @@ public class roundclick {
 					// System.out.print(y1+" "+x1+"-");
 					// System.out.println(yf+" "+xf);
 					if (d < 20 && e < 20) {
-						System.out.println("within");
-						System.out.println(hcount);
+//						System.out.println("within");
+//						System.out.println(hcount);
 
 						int y = 0;
 						int x = 0;
@@ -249,9 +256,9 @@ public class roundclick {
 						int i = highestx - lowestx;
 						int ylen = highesty - lowesty;
 						// System.out.println(list);
-						System.out.println(i);
+//						System.out.println(i);
 						// System.out.println(x + " " + y);
-						System.out.println(total);
+						//System.out.println(total);
 						// if (pattern.startsWith("URULDL")) {
 						// buttonMap.get("Left").execute(a, null);
 						// System.out.println("aoeu");
@@ -260,11 +267,10 @@ public class roundclick {
 						// buttonMap.get("Right").execute(a, null);
 						// }
 						iclick iclick = null;
-						
 
 						if (i > 20) {
 							if (list.get(5).x < list.get(0).x) {
-								System.out.println("double");
+							//	System.out.println("double");
 								iclick = buttonMap.get("DoubleClick");
 
 							} else {
