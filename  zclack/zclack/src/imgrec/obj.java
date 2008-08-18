@@ -3,6 +3,14 @@ package imgrec;
 import java.awt.Color;
 
 public class obj {
+	public obj() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public obj(int rgb) {
+		setColor(rgb);
+	}
+
 	int height;
 
 	int weight;
@@ -10,6 +18,7 @@ public class obj {
 	shape shape;
 
 	Color color;
+
 	public int getHeight() {
 		return height;
 	}
@@ -41,6 +50,11 @@ public class obj {
 	public void setColor(Color color) {
 		this.color = color;
 	}
+
+	public int getRGB() {
+		return color.getRGB();
+	}
+
 	public void setColor(int rgb) {
 		this.color = new Color(rgb);
 	}

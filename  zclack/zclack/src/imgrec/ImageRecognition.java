@@ -24,21 +24,24 @@ public class ImageRecognition {
 
 				BufferedImage bImg = robot.createScreenCapture(new Rectangle(
 						a.width, a.height));
-				boolean[][] boolR = new boolean[a.width][a.height];
+				obj[][] objMap = new obj[a.width][a.height];
 				obj o = new obj();
 				Tree t = new Tree<obj>(o);
-				o.setColor(bImg.getRGB(0,0));
+				o.setColor(bImg.getRGB(0, 0));
 				for (int i = 1; i < bImg.getWidth(); i += 1) {
 					for (int j = 1; j < bImg.getHeight(); j += 1) {
-						
-						
-						Color x = new Color(bImg.getRGB(i, j));
-						Color y = o.getColor();
-						boolR[i][j] = true;
-						if (within(x, y)) {
 
-						}else {
-							subcut(bImg, boolR, o, t, i, j);	
+						if (objMap[i][j] != null) {
+							continue;
+						}
+
+						objMap[i][j] = o;
+						if (withinrgb(bImg.getRGB(i, j), o.getRGB())) {
+
+						} else {
+
+							subcut(bImg, objMap, new obj(bImg.getRGB(i, j)), t,
+									i, j);
 						}
 
 					}
@@ -56,23 +59,26 @@ public class ImageRecognition {
 		}
 	}
 
-	private static boolean within(Color x, Color y) {
+	private static boolean withinrgb(int rgbx, int rgby) {
+		Color x = new Color(rgbx);
+		Color y = new Color(rgby);
 		return within(x.getBlue(), y.getBlue())
 				&& within(x.getRed(), y.getRed())
 				&& within(x.getGreen(), y.getGreen());
 	}
 
-	public static void subcut(BufferedImage bImg, boolean[][] boolR, obj o, Tree t, int i, int j) {
+	public static void subcut(BufferedImage bImg, obj[][] objMap, obj o,
+			Tree t, int i, int j) {
 		for (int x = i; x < bImg.getWidth(); x--) {
-			if(within){
-				boolR[y][x] = true;		
+			if (within(bImg.getRGB(x, j), o.getRGB())) {
+				objMap[j][x] = o;
 			}
-				
+
 		}
 		for (int x = i; x < bImg.getWidth(); x++) {
 			for (int y = j; y < bImg.getHeight(); y++) {
-				if(within){
-				boolR[y][x] = true;		
+				if (within(bImg.getRGB(x, y), o.getRGB())) {
+					objMap[y][x] = o;
 				}
 			}
 		}
