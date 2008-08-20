@@ -26,7 +26,7 @@ public class ImageRecognition {
 						a.width, a.height));
 				obj[][] objMap = new obj[a.width][a.height];
 				obj o = new obj();
-				Tree t = new Tree<obj>(o);
+				Tree<obj> t = new Tree<obj>(o);
 				o.setColor(bImg.getRGB(0, 0));
 				for (int i = 1; i < bImg.getWidth(); i += 1) {
 					for (int j = 1; j < bImg.getHeight(); j += 1) {
@@ -47,8 +47,19 @@ public class ImageRecognition {
 					}
 				}
 
-				// Canvas canv = new Canvas();
-				// canv.getGraphics().drawImage(totalPicture,0,0,null);
+				totalPicture = new BufferedImage(a.width, a.height,
+						BufferedImage.TYPE_INT_RGB);
+				int x = 0, y = 0;
+				for (obj[] objs : objMap) {
+					for (obj obj : objs) {
+						totalPicture.setRGB(x, y, obj.getRGB());
+						x++;
+					}
+					y++;
+					x = 0;
+				}
+				Canvas canv = new Canvas();
+				canv.getGraphics().drawImage(totalPicture, 0, 0, null);
 			}
 			BufferedImage mousePicture = robot
 					.createScreenCapture(new Rectangle(200, 200));
@@ -70,14 +81,14 @@ public class ImageRecognition {
 	public static void subcut(BufferedImage bImg, obj[][] objMap, obj o,
 			Tree t, int i, int j) {
 		for (int x = i; x < bImg.getWidth(); x--) {
-			if (within(bImg.getRGB(x, j), o.getRGB())) {
+			if (withinrgb(bImg.getRGB(x, j), o.getRGB())) {
 				objMap[j][x] = o;
 			}
 
 		}
 		for (int x = i; x < bImg.getWidth(); x++) {
 			for (int y = j; y < bImg.getHeight(); y++) {
-				if (within(bImg.getRGB(x, y), o.getRGB())) {
+				if (withinrgb(bImg.getRGB(x, y), o.getRGB())) {
 					objMap[y][x] = o;
 				}
 			}
