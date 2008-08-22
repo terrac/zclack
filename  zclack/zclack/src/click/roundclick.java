@@ -99,6 +99,7 @@ public class roundclick {
 
 				int minutes = Calendar.getInstance().getTime().getMinutes();
 				if (within(minutes, 55) < 5) {
+					bu.setAlwaysOnTop(true);
 					if (!bu.getCurrent().getText().equals("Return")){
 						bu.getCurrent().setText("Stop");
 					
@@ -107,6 +108,7 @@ public class roundclick {
 						
 					}
 				} else {
+					bu.setAlwaysOnTop(false);
 					bu.getCurrent().setText("Current");
 				}
 
@@ -137,6 +139,7 @@ public class roundclick {
 					}
 
 				}
+				
 				if (count > 50) {
 					time = 0;
 					len = 0;
