@@ -34,13 +34,13 @@ public class InvisibleButtons extends Buttons {
 
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				if (getCurrent().getText().equals("Stop"))
-					getCurrent().setText("Return");
+				
 			}
 
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				if (getCurrent().getText().equals("Stop"))
+					getCurrent().setText("Return");
 			}
 
 			public void mouseExited(MouseEvent e) {

@@ -25,4 +25,8 @@ public class Tree<V> {
     int getNumBranches() { return branches.size(); }
     Tree<V> getBranch(int n) { return branches.get(n); }
     void addBranch(Tree<V> branch) { branches.add(branch); }
+
+	public List<Tree<V>> getBranches() {
+		return branches;
+	}
 }
