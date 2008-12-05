@@ -2,9 +2,13 @@ package main;
 
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -28,7 +32,7 @@ public class InvisibleButtons extends Buttons {
 
 		java.awt.Dimension screenSize = Toolkit.getDefaultToolkit()
 				.getScreenSize();
-		setLocation(screenSize.width - 100, screenSize.height - 30);
+		setLocation(screenSize.width - 100, screenSize.height - 130);
 		setAlwaysOnTop(true);
 		getCurrent().addMouseListener(new MouseListener() {
 
@@ -41,6 +45,23 @@ public class InvisibleButtons extends Buttons {
 				// TODO Auto-generated method stub
 				if (getCurrent().getText().equals("Stop"))
 					getCurrent().setText("Return");
+				
+				 Transferable tr =Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
+				 try {
+					String a =(String) tr.getTransferData(DataFlavor.stringFlavor);
+					a = a.replace('"', ' ');
+					 String string = "C:\\Program Files\\eSpeak\\command_line\\espeak.exe -a 10 -v en\\en-r+f3 \""+a+"\"";
+					 //System.out.println(string);
+					Runtime.getRuntime().exec( string );
+				} catch (UnsupportedFlavorException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+
 			}
 
 			public void mouseExited(MouseEvent e) {

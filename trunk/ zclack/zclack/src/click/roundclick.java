@@ -1,9 +1,12 @@
 package click;
 
+
+
 import guess.ClickMatch;
 import guess.ImgMap;
 
 import java.awt.AWTException;
+import java.awt.Cursor;
 import java.awt.MouseInfo;
 import java.awt.Rectangle;
 import java.awt.Robot;
@@ -71,6 +74,7 @@ public class roundclick {
 	public boolean hasClicked = false;
 
 	protected void stuff() {
+		
 		Drag drag = (Drag) buttonMap.get("Drag");
 		final Buttons bu = new InvisibleButtons();
 		bu.setupButtons(buttonMap);
@@ -179,6 +183,12 @@ public class roundclick {
 					if (!none.isNone && !hasClicked) {
 						if (!within(lastClick, b, 2)) {
 							buttonMap.get("Left").execute(a, null);
+							
+						
+//							Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+//							setCursor(normalCursor);
+//							 
+
 						}
 						hasClicked = true;
 						lastClick = b;
@@ -292,8 +302,7 @@ public class roundclick {
 						a.mouseMove(list.get(0).x, list.get(0).y);
 						if (iclick != null && ylen > 20)
 							iclick.execute(a, null);
-
-						hasClicked = true;
+						clicked();
 						list.clear();
 
 					}
@@ -307,6 +316,11 @@ public class roundclick {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void clicked() {
+		Toolkit.getDefaultToolkit().beep();   
+		hasClicked = true;
 	}
 
 	private int within(int x1, int xf) {
