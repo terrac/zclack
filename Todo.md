@@ -1,0 +1,1 @@
+http://forums.sun.com/thread.jspa?messageID=3656925&tstart=0 add this and make it pause on key typing to avoid issues
